@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-#include "queue.h"
+#include "frame_queue.h"
 
 Node* push(unsigned int key, Node* end){
 	Node *q=(Node *)malloc(sizeof(Node));

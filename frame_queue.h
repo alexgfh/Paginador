@@ -9,7 +9,7 @@ typedef struct Node {
 	unsigned int free_frames;
 } Node;
 
-void init_queue(Node** end);
+void init_queue(Node** end, int size_limit);
 
 Node *find(unsigned int key, Node* end);
 

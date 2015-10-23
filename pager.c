@@ -1,7 +1,9 @@
 #include <unistd.h>
-#include "mmu.h"
+#include <stdint.h>
 #include "pager.h"
-#include "queue.h"
+#include "mmu.h"
+#include "frame_queue.h"
+#include "page_table_list.h"
 #include "page_table.h"
 #include "block_heap.h"
 
@@ -25,7 +27,7 @@ unsigned int* frame_table; //maps frame to block and stores frame info [0~num_fr
 Node* frame_queue;
 
 void pager_init(int nframes, int nblocks) {
-	init_queue(frame_queue);
+	init_queue(&frame_queue, nframes);
 	init_block_heap(nblocks);
 	init_page_table_list();
 }
@@ -35,11 +37,11 @@ void pager_create(pid_t pid) {
 }
 
 void *pager_extend(pid_t pid) {
-    int block = get_block(block_heap);
+    int block = get_block();
     if (block<0) return NULL;
-    struct pagetable* page_table = get_process_page_table(pid);
+    struct pagetable* page_table = get_page_table(pid);
     int page = get_new_page(page_table);
-    return UVM_BASEADDR + (intptr_t)(page<<12)
+    return (void*)(UVM_BASEADDR + (intptr_t)(page<<12));
 }
 
 void pager_fault(pid_t pid, void *addr) {
@@ -47,7 +49,7 @@ void pager_fault(pid_t pid, void *addr) {
 }
 
 int pager_syslog(pid_t pid, void *addr, size_t len) {
-
+    return 0;
 }
 
 void pager_destroy(pid_t pid) {

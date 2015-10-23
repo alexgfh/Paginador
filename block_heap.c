@@ -45,7 +45,7 @@ void free_block(int block) {
 
 /* Pre-condition: there is at least one free block. */
 void reserve_block() {
-    if(!has_free_block()) {
+    if(!has_freeblock()) {
         fprintf(stderr, "Before reserving a block, it must be checked if there's a free one.");
         exit(1);
     }
@@ -64,5 +64,3 @@ void destroy_block_heap() {
     free(block_heap);
     block_heap = NULL;
 }
-
-#endif
