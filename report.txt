@@ -21,5 +21,24 @@ Nome <email@domain.br> XX%
 
 4. Estruturas de dados
 
-Descreva e justifique as estruturas de dados utilizadas em sua
-solução.
+block_heap
+
+Funciona como um heap de memória, mas para blocos, a função get_block
+retorna o primeiro bloco disponível, e caso não haja nenhum, 
+retorna -1.
+
+page_table_list
+
+É um arranjo dinâmico que armazena uma tabela de página para cada
+processo, seu tamanho muda em tempo de execução para armazenar
+tabelas para os novos processos.
+
+frame_queue
+
+Fila que armazena os frames da memória física, através dessa fila
+é implementada a política de reposição de páginas.
+
+page_table
+
+Mapeia das páginas de memória virtual para os frames de memória
+física.
