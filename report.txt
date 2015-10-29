@@ -1,0 +1,44 @@
+PAGINADOR DE MEMÓRIA - RELATÓRIO
+
+1. Termo de compromisso
+
+Os membros do grupo afirmam que todo o código desenvolvido para este
+trabalho é de autoria própria.  Exceto pelo material listado no item
+3 deste relatório, os membros do grupo afirmam não ter copiado
+material da Internet nem obtiveram código de terceiros.
+
+2. Membros do grupo e alocação de esforço
+
+Preencha as linhas abaixo com o nome e o e-mail dos integrantes do
+grupo.  Substitua XX pela contribuição de cada membro do grupo no
+desenvolvimento do trabalho.
+
+Nome <email@domain.br> XX%
+Nome <email@domain.br> XX%
+Nome <email@domain.br> XX%
+
+3. Referências bibliográficas
+
+4. Estruturas de dados
+
+block_heap
+
+Funciona como um heap de memória, mas para blocos, a função get_block
+retorna o primeiro bloco disponível, e caso não haja nenhum, 
+retorna -1.
+
+page_table_list
+
+É um arranjo dinâmico que armazena uma tabela de página para cada
+processo, seu tamanho muda em tempo de execução para armazenar
+tabelas para os novos processos.
+
+frame_queue
+
+Fila que armazena os frames da memória física, através dessa fila
+é implementada a política de reposição de páginas.
+
+page_table
+
+Mapeia das páginas de memória virtual para os frames de memória
+física.
