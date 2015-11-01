@@ -5,6 +5,10 @@ void init_queue(int size_limit);
 
 int get_frame();
 
+int is_frame_mapped(int frameno);
+
+void set_frame_referenced(int frameno);
+
 void free_frame(int frameno);
 
 void destroy_queue();

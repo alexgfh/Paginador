@@ -17,7 +17,11 @@ int get_new_page(struct pagetable* page_table, int block);
 
 int* get_page_address(int page);
 
-int get_page_frame(struct pagetable* page_table, int page);
+int get_page_no(void* addr);
+
+int page_has_frame(struct pagetable* page_table, int page);
+
+int page_has_block(struct pagetable* page_table, int page);
 
 void destroy_page_table(struct pagetable* page_table);
 

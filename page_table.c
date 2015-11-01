@@ -13,6 +13,10 @@ struct pagetable* create_page_table() {
     page_table->num_pages = num_pages;
     page_table->page_frames = (int*)malloc(num_pages*sizeof(int));
     page_table->blocks = (int*)malloc(num_pages*sizeof(int));
+    int i;
+    for(i=0;i<num_pages;i++) {
+        page_table->page_frames[i]=page_table->blocks[i]=-1;
+    }
     page_table->next_free_page = 0;
      
     return page_table;
@@ -31,8 +35,17 @@ int* get_page_address(int page) {
     return (int*)(UVM_BASEADDR + (intptr_t)(page<<12));
 }
 
-int get_page_frame(struct pagetable* page_table, int page) {
-    return page_table->page_frames[page];
+/* Converts from vaddr to page number */
+int get_page_no(void* addr) {
+    return (((intptr_t)addr-UVM_BASEADDR)>>12);
+}
+
+int page_has_frame(struct pagetable* page_table, int page) {
+    return page_table->page_frames[page]!=-1;
+}
+
+int page_has_block(struct pagetable* page_table, int page) {
+    return page_table->page_frames[page]!=-1;
 }
 
 void destroy_page_table(struct pagetable* page_table) {
