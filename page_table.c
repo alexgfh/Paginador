@@ -7,20 +7,22 @@
 struct pagetable* create_page_table() {
     int pagesize = sysconf(_SC_PAGESIZE);
     int addr_space_size = UVM_MAXADDR - UVM_BASEADDR + 1;
-	int num_pages = addr_space_size/pagesize; //256 for 4KiB pages
-	
+  	int num_pages = addr_space_size/pagesize; //256 for 4KiB pages
+    	
     struct pagetable* page_table = malloc(sizeof(struct pagetable));
     page_table->num_pages = num_pages;
-    page_table->page_frames = malloc(num_pages*sizeof(int));
+    page_table->page_frames = (int*)malloc(num_pages*sizeof(int));
+    page_table->blocks = (int*)malloc(num_pages*sizeof(int));
     page_table->next_free_page = 0;
-    
+     
     return page_table;
 }
 
 /* Returns page number (not vaddr) */
-int get_new_page(struct pagetable* page_table) {
+int get_new_page(struct pagetable* page_table, int block) {
     int page_number = page_table->next_free_page;
     page_table->next_free_page++;
+    page_table->blocks[page_number]=block;
     return page_number;
 }
 
@@ -34,6 +36,12 @@ int get_page_frame(struct pagetable* page_table, int page) {
 }
 
 void destroy_page_table(struct pagetable* page_table) {
+    int i=0;
+
+    // Freeing all blocks allocated
+    for(i=0; i < page_table->next_free_page; i++)
+      free_block(page_table->blocks[i]);
     free(page_table->page_frames);
+    free(page_table->blocks);
     free(page_table);
 }

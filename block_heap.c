@@ -28,7 +28,8 @@ int get_block() {
     }
     
     /* Get first available block */
-    for (int i = 0; i<size; i++) {
+    int i=0;
+    for (i = 0; i<size; i++) {
         if(block_heap[i]==0) {
             block_heap[i]=1; //mark as used
             free_blocks--;

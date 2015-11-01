@@ -38,7 +38,7 @@ void *pager_extend(pid_t pid) {
     int block = get_block();
     if (block<0) return NULL;
     struct pagetable* page_table = get_page_table(pid);
-    int page = get_new_page(page_table);
+    int page = get_new_page(page_table, block);
     return (void*)(UVM_BASEADDR + (intptr_t)(page<<12));
 }
 

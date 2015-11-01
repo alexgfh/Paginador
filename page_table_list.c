@@ -37,7 +37,8 @@ void page_table_list_append(pid_t pid) {
 }
 
 void page_table_list_remove(pid_t pid) {
-    for (int i = 0; i<size; i++) {
+    int i=0;
+    for (i = 0; i<size; i++) {
         if (table_list[i].pid == pid) {
             table_list[i].pid = 0;
             destroy_page_table(table_list[i].page_table);
@@ -47,7 +48,8 @@ void page_table_list_remove(pid_t pid) {
 }
 
 struct pagetable* get_page_table(pid_t pid) {
-    for (int i = 0; i<size; i++) {
+    int i=0;
+    for (i = 0; i<size; i++) {
         if (table_list[i].pid == pid) {
             return table_list[i].page_table;
         }
@@ -58,7 +60,8 @@ struct pagetable* get_page_table(pid_t pid) {
 }
 
 void destroy_process_list() {
-    for (int i = 0; i<size; i++) {
+    int i=0;
+    for (i = 0; i<size; i++) {
         if (table_list[i].page_table != NULL) {
             free(table_list[i].page_table);
         }
