@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include "page_table.h"
+#include "frame_queue.h"
 #include "mmu.h"
 
 struct pagetable* create_page_table() {
@@ -52,8 +53,10 @@ void destroy_page_table(struct pagetable* page_table) {
     int i=0;
 
     // Freeing all blocks allocated
-    for(i=0; i < page_table->next_free_page; i++)
+    for(i=0; i < page_table->next_free_page; i++) {
+      free_frame(page_table->page_frames[i]);
       free_block(page_table->blocks[i]);
+    }
     free(page_table->page_frames);
     free(page_table->blocks);
     free(page_table);
