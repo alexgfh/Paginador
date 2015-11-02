@@ -1,5 +1,7 @@
 #include <unistd.h>
 #include <stdint.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include <sys/mman.h>
 #include "pager.h"
 #include "mmu.h"
@@ -7,6 +9,7 @@
 #include "page_table_list.h"
 #include "page_table.h"
 #include "block_heap.h"
+
 
 /*
 #define is_mapped(frame) frame&1
@@ -65,7 +68,21 @@ void pager_fault(pid_t pid, void *addr) {
     }
 }
 
+
 int pager_syslog(pid_t pid, void *addr, size_t len) {
+    char *message = (char*)malloc(len+1);
+    struct pagetable* page_table = get_page_table(pid);
+    int i=0, m=0;
+    
+    for(i=0; i < len; i++)
+    {
+      // if pid doest not have permission to access addr+i
+      // return -1
+      if(!has_permission(page_table, (intptr_t)addr+i)) //return -1;
+        printf("ISH\n");
+      message[m++]=pmem[((intptr_t)addr-UVM_BASEADDR)+i];
+    }
+    printf("pager_syslog pid %d %s\n", (int)pid, message);
     return 0;
 }
 

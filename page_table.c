@@ -1,6 +1,7 @@
 #include <unistd.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "page_table.h"
 #include "frame_queue.h"
 #include "mmu.h"
@@ -19,8 +20,17 @@ struct pagetable* create_page_table() {
         page_table->page_frames[i]=page_table->blocks[i]=-1;
     }
     page_table->next_free_page = 0;
-     
+    page_table->page_size = pagesize;
+    
     return page_table;
+}
+
+int has_permission(struct pagetable* page_table, intptr_t addr)
+{
+  int i=0;
+  for(;i<page_table->next_free_page; i++)
+    if((addr-UVM_BASEADDR)>>12==page_table->page_frames[i]) return 1;
+  return 0;
 }
 
 /* Returns page number (not vaddr) */
@@ -51,7 +61,7 @@ int page_has_block(struct pagetable* page_table, int page) {
 
 void destroy_page_table(struct pagetable* page_table) {
     int i=0;
-
+    
     // Freeing all blocks allocated
     for(i=0; i < page_table->next_free_page; i++) {
       free_frame(page_table->page_frames[i]);

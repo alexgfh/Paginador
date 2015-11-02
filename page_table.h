@@ -2,16 +2,20 @@
 #define page_table_H
 
 #include <sys/types.h>
+#include <stdint.h>
 #include "block_heap.h"
 
 struct pagetable {
     int num_pages;
+    int page_size;
     int *page_frames; //maps from page_no to frame_no
     int *blocks; //blocks reserved for the pages here.
     int next_free_page;
 };
 
 struct pagetable* create_page_table();
+
+int has_permission(struct pagetable* page_table, intptr_t addr);
 
 int get_new_page(struct pagetable* page_table, int block);
 
