@@ -78,8 +78,7 @@ int pager_syslog(pid_t pid, void *addr, size_t len) {
     {
       // if pid doest not have permission to access addr+i
       // return -1
-      if(!has_permission(page_table, (intptr_t)addr+i)) //return -1;
-        printf("ISH\n");
+      if(!has_permission(page_table, (intptr_t)addr+i)) return -1;
       message[m++]=pmem[((intptr_t)addr-UVM_BASEADDR)+i];
     }
     printf("pager_syslog pid %d %s\n", (int)pid, message);
