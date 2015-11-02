@@ -49,6 +49,7 @@ void page_table_list_remove(pid_t pid) {
 
 struct pagetable* get_page_table(pid_t pid) {
     int i=0;
+    
     for (i = 0; i<size; i++) {
         if (table_list[i].pid == pid) {
             return table_list[i].page_table;

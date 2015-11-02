@@ -42,12 +42,14 @@ void pager_create(pid_t pid) {
 void *pager_extend(pid_t pid) {
     int block = get_block();
     if (block<0) return NULL;
+    
     struct pagetable* page_table = get_page_table(pid);
     int page = get_new_page(page_table, block);
     return (void*)(UVM_BASEADDR + (intptr_t)(page<<12));
 }
 
 void pager_fault(pid_t pid, void *addr) {
+
     struct pagetable* page_table = get_page_table(pid);
     int page_no = get_page_no(addr);
     if(page_has_frame(page_table, page_no)) {
@@ -71,15 +73,17 @@ void pager_fault(pid_t pid, void *addr) {
 
 int pager_syslog(pid_t pid, void *addr, size_t len) {
     char *message = (char*)malloc(len+1);
+    
     struct pagetable* page_table = get_page_table(pid);
     int i=0, m=0;
-    
     for(i=0; i < len; i++)
     {
       // if pid doest not have permission to access addr+i
       // return -1
       if(!has_permission(page_table, (intptr_t)addr+i)) return -1;
-      message[m++]=pmem[((intptr_t)addr-UVM_BASEADDR)+i];
+      int page_no = get_page_no((void*)(((intptr_t)addr+i)&(~(page_table->page_size))));
+      int frame = page_table->page_frames[page_no];
+      message[m++]=pmem[frame+i];
     }
     printf("pager_syslog pid %d %s\n", (int)pid, message);
     return 0;

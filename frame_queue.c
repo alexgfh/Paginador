@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <sys/types.h>
+#include <stdio.h>
 #include "page_table_list.h"
 #include "page_table.h"
 #include "mmu.h"
@@ -29,7 +30,7 @@ static int size;
 #define set_page_no(mask, pageno) mask=mask&3;mask|=(pageno<<2)
 */
 void init_queue(int size_limit){
-	frame_queue = calloc(size_limit,sizeof(int));
+	frame_queue = calloc(size_limit,sizeof(struct frame_info));
 	frame = 0;
 	size = size_limit;
 }
@@ -44,18 +45,21 @@ int get_frame(pid_t pid, int page_no){
 			    //save frame to disk
 			    int out_pid = frame_queue[frame].pid;
     			int out_page_no = frame_queue[frame].page_no;
+    			
+                fprintf(stderr, "out_pid: %d\n", out_pid);
     			struct pagetable* out_page_table = get_page_table(out_pid);
 			    int block = out_page_table->blocks[out_page_no];
 			    mmu_disk_write(frame, block);
 			    mmu_nonresident(pid, get_page_address(out_page_no));
 			    out_page_table->page_frames[page_no]=-1;
 			    
-			    //inverse mapping from frame to vaddr
-			    frame_queue[frame].pid = pid;
-			    frame_queue[frame].page_no = page_no;
+			    
 				/*TODO: save frame to disk
 				 *save block_number on frame_queue[frame] */
 			}
+			//inverse mapping from frame to vaddr
+			frame_queue[frame].pid = pid;
+			frame_queue[frame].page_no = page_no;
 			frame_queue[frame].mapped=1;
 			frame_queue[frame].referenced=1;
 		}
