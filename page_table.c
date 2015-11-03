@@ -56,7 +56,7 @@ int page_has_frame(struct pagetable* page_table, int page) {
 }
 
 int page_has_block(struct pagetable* page_table, int page) {
-    return page_table->page_frames[page]!=-1;
+    return page_table->blocks[page]!=-1;
 }
 
 void destroy_page_table(struct pagetable* page_table) {

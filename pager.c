@@ -63,6 +63,7 @@ void pager_fault(pid_t pid, void *addr) {
             int block = page_table->blocks[page_no];
             mmu_disk_read(block, new_frame);
             free_block(block);
+            page_table->blocks[page_no]=-1;
         }
         page_table->page_frames[page_no] = new_frame;
         mmu_zero_fill(new_frame);
