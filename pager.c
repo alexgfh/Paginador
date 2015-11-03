@@ -41,10 +41,12 @@ void pager_create(pid_t pid) {
 
 void *pager_extend(pid_t pid) {
     int block = get_block();
+    
     if (block<0) return NULL;
     
     struct pagetable* page_table = get_page_table(pid);
     int page = get_new_page(page_table, block);
+    printf("%d %d\n", block, page);
     return (void*)(UVM_BASEADDR + (intptr_t)(page<<12));
 }
 
@@ -58,7 +60,7 @@ void pager_fault(pid_t pid, void *addr) {
         set_frame_referenced(frame);
     }
     else {
-        int new_frame = get_frame();
+        int new_frame = get_frame(pid, page_no);
         if(page_has_block(page_table, page_no)) {
             int block = page_table->blocks[page_no];
             mmu_disk_read(block, new_frame);

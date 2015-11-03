@@ -3,7 +3,7 @@
 
 void init_queue(int size_limit);
 
-int get_frame();
+int get_frame(pid_t pid, int page_no);
 
 int is_frame_mapped(int frameno);
 

@@ -42,3 +42,9 @@ page_table
 
 Mapeia das páginas de memória virtual para os frames de memória
 física.
+
+5. Execução do programa
+
+A execução deve ser feita através do utilitário make. As opções são: 
+- mmu: compila todos os arquivos que serão usados pelo programa;
+- test[NUMERO]: compila os arquivos responsáveis pelo teste do número informado. Ex: test1, test2, etc.

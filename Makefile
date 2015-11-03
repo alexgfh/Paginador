@@ -25,3 +25,9 @@ clean:
 	rm -f mmu
 	rm -f mmu.sock
 	rm -f test6
+	rm -f test5
+	rm -f test4
+	rm -f test3
+	rm -f test2
+	rm -f test1
+	rm -f *~

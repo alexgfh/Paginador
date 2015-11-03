@@ -5,7 +5,7 @@
 #include "uvm.h"
 
 int main(void) {
-  uvm_create();
+  	uvm_create();
 	char *page0 = uvm_extend();
 	page0[0] = '\0';
 	strcat(page0, "hello");

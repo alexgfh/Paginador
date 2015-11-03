@@ -1,6 +1,8 @@
 /*
  * test4.c
  *
+ * Verificação de escrita e leitura: Escreve na memória virtual x blocos, lê os x blocos e compara para ver se os blocos estão certos.
+ *
  *  Created on: 01/11/2015
  *      Author: Amanda
  */

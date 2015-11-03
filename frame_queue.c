@@ -44,10 +44,10 @@ int get_frame(pid_t pid, int page_no){
 			if(frame_queue[frame].mapped) {
 			    //save frame to disk
 			    int out_pid = frame_queue[frame].pid;
-    			int out_page_no = frame_queue[frame].page_no;
-    			
-                fprintf(stderr, "out_pid: %d\n", out_pid);
-    			struct pagetable* out_page_table = get_page_table(out_pid);
+	    		    int out_page_no = frame_queue[frame].page_no;
+	    			
+		            fprintf(stderr, "out_pid: %d\n", out_pid);
+	    		    struct pagetable* out_page_table = get_page_table(out_pid);
 			    int block = out_page_table->blocks[out_page_no];
 			    mmu_disk_write(frame, block);
 			    mmu_nonresident(pid, get_page_address(out_page_no));

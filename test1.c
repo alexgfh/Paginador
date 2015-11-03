@@ -1,6 +1,8 @@
 /*
  * test1.c
  *
+ *  Verifica o tratamento de falha de páginas.
+ *
  *  Created on: 01/11/2015
  *      Author: Amanda
  */
@@ -22,8 +24,9 @@ int main(void) {
 		page[i][1] = '\0';
 	}
 	char* pageout = uvm_extend(); //aloca mais um quandro de memoria. Deve ser feita a substitucao de alguma pagina
-	pageout = "5\0";
-
+	pageout[0] = '\0';
+	strcat(pageout, "hello");	
+	
 	for (i = 0; i < 4; i++) {
 		uvm_syslog(page[i], strlen(page[i]) + 1);
 	}

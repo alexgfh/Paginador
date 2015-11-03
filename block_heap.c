@@ -7,6 +7,7 @@ static int size;
 static int free_blocks;
 
 void init_block_heap(int nblocks) {
+    printf("NUMERO BLOCOS %d\n", nblocks);
     if (block_heap!=NULL) {
         fprintf(stderr, "block_heap already initialized.");
         exit(1);
@@ -26,7 +27,8 @@ int get_block() {
     }
     
     /* Get first available block */
-    int i=0;
+    int i=0; 
+    printf("SIZE %d\n", size);
     for (i = 0; i<size; i++) {
         if(block_heap[i]==0) {
             block_heap[i]=1; //mark as used
