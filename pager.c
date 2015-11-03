@@ -46,8 +46,15 @@ void *pager_extend(pid_t pid) {
     
     struct pagetable* page_table = get_page_table(pid);
     int page = get_new_page(page_table, block);
-    printf("%d %d\n", block, page);
-    return (void*)(UVM_BASEADDR + (intptr_t)(page<<12));
+    printf("PAGER_EXTEND %d %d\n", page, block);
+
+	int new_frame = get_frame(pid, page);
+	page_table->page_frames[page]=new_frame;
+	mmu_resident(pid, (void*)get_page_address(page), new_frame, PROT_READ | PROT_WRITE);
+	
+	//TODO: Tratar o caso, onde a memoria ta cheia
+	
+	return (void*)(UVM_BASEADDR + (intptr_t)(page<<12));
 }
 
 void pager_fault(pid_t pid, void *addr) {
@@ -61,6 +68,7 @@ void pager_fault(pid_t pid, void *addr) {
     }
     else {
         int new_frame = get_frame(pid, page_no);
+		printf("PAGER_FAULT %d\n", page_no);
         if(page_has_block(page_table, page_no)) {
             int block = page_table->blocks[page_no];
             mmu_disk_read(block, new_frame);

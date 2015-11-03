@@ -7,7 +7,6 @@ static int size;
 static int free_blocks;
 
 void init_block_heap(int nblocks) {
-    printf("NUMERO BLOCOS %d\n", nblocks);
     if (block_heap!=NULL) {
         fprintf(stderr, "block_heap already initialized.");
         exit(1);
