@@ -25,11 +25,11 @@ int main(void) {
 	}
 	char* pageout = uvm_extend(); //aloca mais um quandro de memoria. Deve ser feita a substitucao de alguma pagina
 	pageout[0] = '\0';
-	strcat(pageout, "hello");	
+	strcat(pageout, "hello");
 	
 	for (i = 0; i < 4; i++) {
 		uvm_syslog(page[i], strlen(page[i]) + 1);
 	}
-	uvm_syslog(pageout, strlen(pageout) + 1);
+	//uvm_syslog(pageout, strlen(pageout) + 1);
 	exit(EXIT_SUCCESS);
 }

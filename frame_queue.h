@@ -11,6 +11,8 @@ void set_frame_referenced(int frameno);
 
 void free_frame(int frameno);
 
+void save_to_disk(int frameno);
+
 void destroy_queue();
 
 #endif

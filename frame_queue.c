@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <sys/types.h>
+#include <sys/mman.h>
 #include <stdio.h>
 #include "page_table_list.h"
 #include "page_table.h"
@@ -40,15 +41,18 @@ int get_frame(pid_t pid, int page_no){
 	while (1) {
 		int ret = -1;
 		if(!frame_queue[frame].referenced) {
+		    //fprintf(stderr, "ret:%d, referenced:%d\n", frame, frame_queue[frame].referenced);
 			ret = frame;
 			if(frame_queue[frame].mapped) {
 			    //save frame to disk
 			    int out_pid = frame_queue[frame].pid;
 	    		    int out_page_no = frame_queue[frame].page_no;
 	    			
-		            fprintf(stderr, "out_pid: %d\n", out_pid);
+		            //fprintf(stderr, "out_pid: %d\n", out_pid);
 	    		    struct pagetable* out_page_table = get_page_table(out_pid);
 			    int block = out_page_table->blocks[out_page_no];
+			    printf("out_pid:%d\n", frame_queue[frame].pid);
+                printf("out_page_no:%d, frame:%d, block:%d\n",out_page_no, frame, block);
 			    mmu_disk_write(frame, block);
 			    mmu_nonresident(pid, get_page_address(out_page_no));
 			    out_page_table->page_frames[page_no]=-1;
@@ -63,10 +67,14 @@ int get_frame(pid_t pid, int page_no){
 			frame_queue[frame].mapped=1;
 			frame_queue[frame].referenced=1;
 		}
-		frame++;
-		frame %= size;
-		if(ret!=-1) return ret;
+		
 		frame_queue[frame].referenced=0;
+		//mmu_resident(frame_queue[frame].pid, get_page_address(frame_queue[frame].page_no), frame, PROT_NONE);
+		frame++;
+		
+		frame %= size;
+		
+		if(ret!=-1) {return ret;}
 	}
 	return -1; //error
 }
@@ -85,6 +93,16 @@ void free_frame(int frameno) {
 	frame_queue[frameno].page_no=0;
 	frame_queue[frameno].mapped=0;
 	frame_queue[frameno].referenced=0;
+}
+
+void save_to_disk(int frameno) {
+    int out_pid = frame_queue[frame].pid;
+	int out_page_no = frame_queue[frame].page_no;
+	struct pagetable* out_page_table = get_page_table(out_pid);
+    int block = out_page_table->blocks[out_page_no];
+	mmu_disk_write(frame, block);
+	mmu_nonresident(out_pid, get_page_address(out_page_no));
+	out_page_table->page_frames[out_page_no]=-1;
 }
 
 void destroy_queue(){
