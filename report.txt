@@ -13,9 +13,9 @@ Preencha as linhas abaixo com o nome e o e-mail dos integrantes do
 grupo.  Substitua XX pela contribuição de cada membro do grupo no
 desenvolvimento do trabalho.
 
-Nome <email@domain.br> XX%
-Nome <email@domain.br> XX%
-Nome <email@domain.br> XX%
+Amanda Santos <amandaaccsantos@gmail.com> Testes
+Alex Goncalves <alexgfh@gmail.com> Implementacao
+Thiago Vieira de A. Silva <thiagovieiraas@gmail.com> Implementacao
 
 3. Referências bibliográficas
 
@@ -47,4 +47,5 @@ física.
 
 A execução deve ser feita através do utilitário make. As opções são: 
 - mmu: compila todos os arquivos que serão usados pelo programa;
-- test[NUMERO]: compila os arquivos responsáveis pelo teste do número informado. Ex: test1, test2, etc.
+- test[NUMERO]: compila os arquivos responsáveis pelo teste do número
+informado. Ex: test1, test2, etc.

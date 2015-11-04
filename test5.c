@@ -34,11 +34,16 @@ int main(void) {
 	for (i = 0; i < 4; i++)
 		uvm_syslog(page[i], strlen(page[i]) + 1);
   
+  char *p2[3];
   for(i=0; i < 3; i++)
-    page[i][0]='0'+i+1;
+  {
+    p2[i]=uvm_extend();
+    p2[i][0]='0'+i+1;
+    p2[i][1]='\0';
+  }
 
-	for (i = 0; i < 4; i++)
-		uvm_syslog(page[i], strlen(page[i]) + 1);
+	for (i = 0; i < 3; i++)
+		uvm_syslog(p2[i], strlen(p2[i]) + 1);
   
 	exit(EXIT_SUCCESS);
 }
