@@ -55,8 +55,7 @@ struct pagetable* get_page_table(pid_t pid) {
         }
     }
     fprintf(stderr, "process wasn't added to page_table_list.");
-    exit(1);
-    
+    exit(1);    
 }
 
 void destroy_process_list() {

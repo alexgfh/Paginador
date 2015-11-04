@@ -15,6 +15,9 @@ test3:
 test4:
 	gcc -Wall test4.c uvm.a -lpthread -o test4
 
+test5:
+	gcc -Wall test5.c uvm.a -lpthread -o test5
+
 test6:
 	gcc -Wall test6.c uvm.a -lpthread -o test6
 

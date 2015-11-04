@@ -29,7 +29,7 @@ int main(void) {
 	}
 	int hits = 0;
 	for (i = 0; i < 3; i++) {
-		if(page[i] == charUm + 1)
+		if(page[i][0] == charUm + 1)
 			++hits;
 	}
 	exit((hits == 3)? EXIT_SUCCESS : EXIT_FAILURE);
