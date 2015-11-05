@@ -1,7 +1,7 @@
 /*
- * test1.c
+ * test5.c
  *
- *  Verifica o tratamento de falha de páginas.
+ *  Verifica a substituicao de paginas.
  *
  *  Created on: 01/11/2015
  *      Author: Amanda
@@ -19,31 +19,30 @@ int main(void) {
 	char* page[4];
 	char charUm = '1';
 	for (i = 0; i < 4; i++) {
-		page[i] = uvm_extend(); //aloca todos os quadros de memoria fisica
+		page[i] = uvm_extend();
 		page[i][0] = charUm + i;
 		page[i][1] = '\0';
 	}
-	char *pageout = uvm_extend(); //aloca mais um quandro de memoria. Deve ser feita a substitucao de alguma pagina
+	char *pageout = uvm_extend();
 	pageout[0] = '\0';
 	strcat(pageout, "hello");
-  
-  char *po2 = uvm_extend();
-  po2[0] = '\0';
-  strcat(po2, "hello2");
+
+	char *pageout2 = uvm_extend();
+	pageout2[0] = '\0';
+	strcat(pageout2, "hello2");
 
 	for (i = 0; i < 4; i++)
 		uvm_syslog(page[i], strlen(page[i]) + 1);
-  
-  char *p2[3];
-  for(i=0; i < 3; i++)
-  {
-    p2[i]=uvm_extend();
-    p2[i][0]='0'+i+1;
-    p2[i][1]='\0';
-  }
+
+	char* page2[3];
+	for (i = 0; i < 3; i++) {
+		page2[i] = uvm_extend();
+		page2[i][0] = '0' + i + 1;
+		page2[i][1] = '\0';
+	}
 
 	for (i = 0; i < 3; i++)
-		uvm_syslog(p2[i], strlen(p2[i]) + 1);
-  
+		uvm_syslog(page2[i], strlen(page2[i]) + 1);
+
 	exit(EXIT_SUCCESS);
 }

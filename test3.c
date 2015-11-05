@@ -1,7 +1,7 @@
 /*
  * test3.c
  * 
- * Verifica proteção de memória: Escreve em página de outro processo.
+ * Verifica protecao de memoria: Escreve em pagina de outro processo.
  *
  *  Created on: 01/11/2015
  *      Author: Amanda
@@ -26,7 +26,7 @@ int main(void) {
 	pid = fork();
 	if (pid == -1)
 		perror("fork:");
-		exit(EXIT_FAILURE);
+	exit(EXIT_FAILURE);
 	if (pid == 0) { //filho
 		strcat(page, "Try me!");
 	} else { //pai

@@ -1,7 +1,7 @@
 /*
  * test2.c
  *
- * Verifica proteção de memória: Escreve em página não alocada.
+ * Verifica proteção de memoria: Escreve em pagina nao alocada.
  *
  *  Created on: 01/11/2015
  *      Author: Amanda
