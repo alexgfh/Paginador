@@ -54,7 +54,6 @@ struct pagetable* get_page_table(pid_t pid) {
 			return table_list[i].page_table;
 		}
 	}
-	fprintf(stderr, "process wasn't added to page_table_list.");
 	exit(1);
 }
 

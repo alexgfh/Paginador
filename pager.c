@@ -37,8 +37,6 @@ void *pager_extend(pid_t pid) {
 void pager_fault(pid_t pid, void *addr) {
 	struct pagetable* page_table = get_page_table(pid);
 	int page_no = get_page_no(addr);
-	printf("pager_fault page_no:%d, has_frame:%d\n", page_no,
-			page_has_frame(page_table, page_no));
 	if (page_has_frame(page_table, page_no)) {
 		int frame = page_table->page_frames[page_no];
 		mmu_chprot(pid, addr, PROT_READ | PROT_WRITE);
